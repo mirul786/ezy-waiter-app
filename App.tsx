@@ -7,24 +7,7 @@ import {
   Text, View
 } from 'react-native';
 import TabNavigator from './src/navigation/TabNavigation';
-
-
-
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed Screen</Text>
-    </View>
-  );
-}
-
-function Article() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Article Screen</Text>
-    </View>
-  );
-}
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,7 +20,9 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <TabNavigator />
+      <GestureHandlerRootView>
+        <TabNavigator />
+      </GestureHandlerRootView>
     </NavigationContainer>
   );
 }
