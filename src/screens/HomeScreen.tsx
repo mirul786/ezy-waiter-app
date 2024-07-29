@@ -4,6 +4,7 @@ import SearchBar from '../component/SearchBar/SearchBar'
 import { ScrollView } from 'react-native-gesture-handler'
 import ProductCard from '../component/ProductContainer/ProductCard'
 import Header from '../component/Header/Header'
+import ProductContainer from '../component/ProductContainer/ProductContainer'
 // import table from '../assets/images/dinein.png';
 
 const products = [
@@ -44,16 +45,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <Header />
       <SearchBar />
-      <ScrollView contentContainerStyle={styles.productsContainer}>
-        {products.map((product, index) => (
-          <ProductCard
-            key={index}
-            title={product.title}
-            price={product.price}
-            // imageUrl={product.imageUrl}
-          />
-        ))}
-      </ScrollView>
+      <ProductContainer/>
     </View>
   );
 }
