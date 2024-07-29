@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Header from '../component/Home/Header'
-import SearchBar from '../component/Home/SearchBar'
+import SearchBar from '../component/SearchBar/SearchBar'
 import { ScrollView } from 'react-native-gesture-handler'
-import ProductCard from '../component/Home/ProductCard'
+import ProductCard from '../component/ProductContainer/ProductCard'
+import Header from '../component/Header/Header'
 // import table from '../assets/images/dinein.png';
 
 const products = [

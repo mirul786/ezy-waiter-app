@@ -34,14 +34,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
     backgroundColor: '#FFA500',
-    height: 250,
+    height: 150,
   },
   headerCenter: {
     alignItems: 'center',
     flex: 1,
   },
   banner: {
-    paddingTop: 70,
     alignItems: 'center',
   },
   logo: {
