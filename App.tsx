@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import TabNavigator from './src/navigation/TabNavigation';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import DraweNavigation from './src/navigation/DraweNavigation/DraweNavigation';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,7 +22,8 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <GestureHandlerRootView>
-        <TabNavigator />
+        {/* <TabNavigator /> */}
+        <DraweNavigation/>
       </GestureHandlerRootView>
     </NavigationContainer>
   );
