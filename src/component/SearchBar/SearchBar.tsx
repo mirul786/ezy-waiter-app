@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
+import { SearchBarProps } from 'react-native-screens';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const SearchBar = () => {
+const SearchBar: React.FC<SearchBarProps> = ({placeholder}) => {
   return (
     <View style={styles.searchBarContainer}>
       <Icon name="search" size={20} color="green" />
-      <TextInput placeholder="Search Product" style={styles.searchInput} />
+      <TextInput placeholder= {placeholder} style={styles.searchInput} />
     </View>
   );
 };

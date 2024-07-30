@@ -6,6 +6,7 @@ import Feed from '../../screens/Feed';
 import Article from '../../screens/Article';
 import TabNavigator from '../TabNavigation';
 import CustomDrawerContent from './CustomDrawerContent';
+import CustomerService from '../../screens/CustomerService';
 
 const Drawer = createDrawerNavigator();
 
@@ -14,19 +15,12 @@ const Drawer = createDrawerNavigator();
 const DraweNavigation: React.FC = (): React.JSX.Element => {
   return (
     <Drawer.Navigator
-      initialRouteName="Tab"
+      initialRouteName="Menu"
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Menu" component={TabNavigator} />
-      <Drawer.Screen
-        name="Feed"
-        component={Feed}
-        options={{drawerLabel: 'Homes'}}
-      />
-      <Drawer.Screen
-        name="Notifications"
-        component={Article}
-        options={{drawerLabel: 'Updates'}}
-      />
+      <Drawer.Screen name="Feed" component={Feed} />
+      <Drawer.Screen name="Notifications" component={Article} />
+      <Drawer.Screen name="CustomerService" component={CustomerService} />
     </Drawer.Navigator>
   );
 };

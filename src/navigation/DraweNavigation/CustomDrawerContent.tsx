@@ -10,17 +10,24 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = props => {
     <DrawerContentScrollView {...props}>
       <DrawerItem
         icon={({color, size}) => (
-          <AntDesign name="stepforward" color={'black'} size={size} />
+          <AntDesign name="stepforward" color={color} size={size} />
         )}
         label={'Feed'}
         onPress={() => navigation.navigate('Feed')}
       />
       <DrawerItem
         icon={({color, size}) => (
-          <AntDesign name="notification" color={'black'} size={size} />
+          <AntDesign name="notification" color={color} size={size} />
         )}
         label={'Notifications'}
         onPress={() => navigation.navigate('Notifications')}
+      />
+      <DrawerItem
+        icon={({color, size}) => (
+          <AntDesign name="customerservice" color={color} size={size} />
+        )}
+        label={'Customer Service'}
+        onPress={() => navigation.navigate('CustomerService')}
       />
     </DrawerContentScrollView>
   );
