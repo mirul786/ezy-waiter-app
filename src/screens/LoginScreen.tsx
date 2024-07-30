@@ -8,14 +8,11 @@ import {
 } from 'react-native';
 import React from 'react';
 import Animated, {FadeIn, FadeInDown, FadeInUp} from 'react-native-reanimated';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
+import {LoginProps} from '../model/AuthModel';
 
-interface LoginProps {
-  setIsAuthenticated: (value: boolean) => void;
-}
-
-const Login: React.FC<LoginProps> = ({setIsAuthenticated}) => {
-  const navigation = useNavigation();
+const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
+  // const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Image
@@ -71,7 +68,7 @@ const Login: React.FC<LoginProps> = ({setIsAuthenticated}) => {
             style={styles.fullWidth}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={() => setIsAuthenticated(true)}>
+              onPress={() => setIsAuthenticated && setIsAuthenticated(true)}>
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
           </Animated.View>
@@ -175,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default LoginScreen;

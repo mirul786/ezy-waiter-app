@@ -10,3 +10,8 @@ export type SignInFields = {
   password: string;
   phone?: string | undefined;
 };
+
+
+export interface LoginProps {
+  setIsAuthenticated?: (value: boolean) => void;
+}

@@ -1,10 +1,19 @@
-import { StyleSheet } from 'react-native'
-import React from 'react'
-import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import {StyleSheet} from 'react-native';
+import React from 'react';
+import {
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItem,
+} from '@react-navigation/drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {LoginProps} from '../../model/AuthModel';
 
-const CustomDrawerContent: React.FC<DrawerContentComponentProps> = props => {
-  const {navigation} = props;
+interface CustomDrawerContentProps
+  extends DrawerContentComponentProps,
+    LoginProps {}
+
+const CustomDrawerContent: React.FC<CustomDrawerContentProps> = props => {
+  const {navigation, setIsAuthenticated} = props;
 
   return (
     <DrawerContentScrollView {...props}>
@@ -29,10 +38,17 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = props => {
         label={'Customer Service'}
         onPress={() => navigation.navigate('CustomerService')}
       />
+      <DrawerItem
+        icon={({color, size}) => (
+          <AntDesign name="Logout" color={color} size={size} />
+        )}
+        label={'Logout'}
+        onPress={() => setIsAuthenticated && setIsAuthenticated(false)}
+      />
     </DrawerContentScrollView>
   );
 };
 
-export default CustomDrawerContent
+export default CustomDrawerContent;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

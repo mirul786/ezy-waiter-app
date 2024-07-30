@@ -7,7 +7,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import DraweNavigation from './src/navigation/DraweNavigation/DraweNavigation';
 import Feed from './src/screens/Feed';
-import Login from './src/screens/LoginScreen';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,7 +39,7 @@ function App(): React.JSX.Element {
           <Stack.Screen
             name="LoginScreen"
             component={(props: any) => (
-              <Login {...props} setIsAuthenticated={setIsAuthenticated} />
+              <LoginScreen {...props} setIsAuthenticated={setIsAuthenticated} />
             )}
             options={{headerShown: false}}
           />

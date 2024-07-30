@@ -1,6 +1,10 @@
+import {useNavigation, NavigationProp} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Feed from '../../screens/Feed';
+import { DrawerNavigatorParamList } from '../../navigation/types';
 
 type ProductCardProps = {
   title: string;
@@ -9,18 +13,21 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({title, price}) => {
+  const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
   return (
-    <View style={styles.cardContainer}>
-      <Image
-        source={require('../../assets/images/dinein.png')}
-        style={styles.productImage}
-      />
-      <View style={styles.cardContent}>
-        <Text style={styles.productTitle}>{title}</Text>
-        <Text style={styles.productPrice}>{price}</Text>
-        <Icon name="heart-outline" size={24} color="#000" />
+    <TouchableOpacity onPress={() => navigation.navigate('Feed')}>
+      <View style={styles.cardContainer}>
+        <Image
+          source={require('../../assets/images/dinein.png')}
+          style={styles.productImage}
+        />
+        <View style={styles.cardContent}>
+          <Text style={styles.productTitle}>{title}</Text>
+          <Text style={styles.productPrice}>{price}</Text>
+          <Icon name="heart-outline" size={24} color="#000" />
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
