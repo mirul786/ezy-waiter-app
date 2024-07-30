@@ -1,16 +1,15 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
-import products from './Products';
-import ProductCard from './ProductCard';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import tables from './Tables';
+import TableCard from './TableCard';
 
-
-const ProductContainer = () => {
+const TableContainer = () => {
   return (
     <ScrollView contentContainerStyle={styles.productsContainer}>
-      {products.map((product, index) => (
-        <ProductCard
+      {tables.map((product, index) => (
+        <TableCard
           key={index}
           title={product.title}
           price={product.price}
@@ -39,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductContainer;
+export default TableContainer;

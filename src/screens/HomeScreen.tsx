@@ -3,47 +3,14 @@ import React from 'react'
 import SearchBar from '../component/SearchBar/SearchBar'
 import Header from '../component/Header/Header'
 import ProductContainer from '../component/ProductContainer/ProductContainer'
-// import table from '../assets/images/dinein.png';
-
-const products = [
-  {
-    title: 'Fish & Chips',
-    price: '$14.00',
-    // imageUrl: '../assets/images/spoon.png',
-  },
-  {
-    title: 'Atlantic Salmon',
-    price: '$18.00',
-    // imageUrl: table,
-  },
-  {
-    title: 'Fish & Chips',
-    price: '$14.00',
-    // imageUrl: '../assets/images/spoon.png',
-  },
-  {
-    title: 'Atlantic Salmon',
-    price: '$18.00',
-    // imageUrl: table,
-  },
-  {
-    title: 'Fish & Chips',
-    price: '$14.00',
-    // imageUrl: '../assets/images/spoon.png',
-  },
-  {
-    title: 'Atlantic Salmon',
-    price: '$18.00',
-    // imageUrl: table,
-  },
-];
+import TableContainer from '../component/TableContainer/TableContainer'
 
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Header />
-      <SearchBar placeholder="Search your product" onSearchButtonPress={() => Alert.alert("Button is pressed")}/>
-      <ProductContainer />
+      <SearchBar placeholder="Search your table" onSearchButtonPress={() => Alert.alert("Button is pressed")}/>
+      <TableContainer />
     </View>
   );
 }

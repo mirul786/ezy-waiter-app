@@ -1,20 +1,17 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-// import Menu from './Menu';
-// import Cart from './Cart';
 
 const Header = () => {
   return (
     <View style={styles.headerContainer}>
       <View>
-        {/* <Menu /> */}
       </View>
       <View style={styles.banner}>
         <Image
-          source={require('../../assets/images/spoon.png')}
+          source={require('../../assets/images/png/waiterLogo.png')}
           style={styles.logo}
         />
-        <Text style={styles.title}>Seafood Restaurant</Text>
+        <Text style={styles.title}>Waiter Application</Text>
         <View style={styles.subtitle}>
           {/* <Icon name="cart-outline" size={30} color="#000" /> */}
           <Text>Delight in Every Bite</Text>
@@ -44,8 +41,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 50,
-    height: 80,
+    width: 100,
+    height: 70,
+    borderRadius: 10
   },
   title: {
     fontSize: 20,
