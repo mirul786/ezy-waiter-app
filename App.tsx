@@ -8,6 +8,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import DraweNavigation from './src/navigation/DraweNavigation/DraweNavigation';
 import Feed from './src/screens/Feed';
 import LoginScreen from './src/screens/LoginScreen';
+import Toast from 'react-native-toast-message';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,6 +52,7 @@ function App(): React.JSX.Element {
           />
         )}
       </Stack.Navigator>
+        <Toast />
     </NavigationContainer>
   );
 }

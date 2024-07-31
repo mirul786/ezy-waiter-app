@@ -5,14 +5,82 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Animated, {FadeIn, FadeInDown, FadeInUp} from 'react-native-reanimated';
 // import {useNavigation} from '@react-navigation/native';
 import {LoginProps} from '../model/AuthModel';
+import Toast from 'react-native-toast-message';
 
 const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
   // const navigation = useNavigation();
+  const [field, setField] = useState({
+    email: '',
+    password: '',
+    message: '',
+  });
+
+  const [error, setError] = useState({
+    email: '',
+    password: '',
+    message: '',
+  });
+
+  const isPasswordValidHandler = (password: string) => {
+    const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+    const isValidPassword = passRegex.test(password);
+    return isValidPassword;
+  };
+
+  const isEmailValidateHandler = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isEmailValid = emailRegex.test(email);
+    return isEmailValid;
+  };
+
+  const signInAuthHandler = (value: string, name: string) => {
+    setField({...field, [name]: value});
+    setError({...error, email: '', password: '', message: ''});
+  };
+
+  const signInValidate = () => {
+    if (!field.email) {
+      setError({...error, email: 'Please enter your email'});
+      return false;
+    } else if (!isEmailValidateHandler(field.email)) {
+      setError({...error, email: 'Please enter valid email'});
+      return false;
+    } else if (!field.password) {
+      setError({...error, password: 'Please enter your password'});
+      return false;
+    } else if (!isPasswordValidHandler(field.password)) {
+      setError({
+        ...error,
+        password:
+          'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number',
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const singInHandler = async () => {
+    let val = signInValidate();
+    if (val && setIsAuthenticated) {
+      setIsAuthenticated(true);
+    } else if (error.email) {
+      Toast.show({
+        type: 'error',
+        text1: error.email,
+      });
+    } else if (error.password) {
+      Toast.show({
+        type: 'error',
+        text1: error.password,
+      });
+    }
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -52,6 +120,8 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
               placeholder="Email"
               placeholderTextColor={'gray'}
               style={styles.input}
+              onChangeText={text => signInAuthHandler(text, 'email')}
+              value={field?.email}
             />
           </Animated.View>
           <Animated.View
@@ -60,7 +130,10 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
             <TextInput
               placeholder="Password"
               placeholderTextColor={'gray'}
+              secureTextEntry={true}
               style={styles.input}
+              onChangeText={text => signInAuthHandler(text, 'password')}
+              value={field?.password}
             />
           </Animated.View>
           <Animated.View
@@ -68,7 +141,7 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
             style={styles.fullWidth}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={() => setIsAuthenticated && setIsAuthenticated(true)}>
+              onPress={() => singInHandler()}>
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
           </Animated.View>
