@@ -4,30 +4,45 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feed from '../../screens/Feed';
-import { DrawerNavigatorParamList } from '../../navigation/types';
+import {DrawerNavigatorParamList} from '../../navigation/types';
+import ModalComponent from '../Modal/ModalComponent';
 
 type ProductCardProps = {
   title: string;
   price: string;
-  //   imageUrl: string;
+  modalVisible: boolean;
+  setModalVisible: (visible: boolean) => void;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({title, price}) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  title,
+  price,
+  modalVisible,
+  setModalVisible,
+}) => {
   const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
   return (
-    // <TouchableOpacity onPress={() => navigation.navigate('Feed')}>
-      <View style={styles.cardContainer}>
-        <Image
-          source={require('../../assets/images/png/burger.jpg')}
-          style={styles.productImage}
-        />
-        <View style={styles.cardContent}>
-          <Text style={styles.productTitle}>{title}</Text>
-          <Text style={styles.productPrice}>{price}</Text>
-          <Icon name="heart-outline" size={24} color="#000" />
+    <>
+      <TouchableOpacity
+        onPress={() => setModalVisible && setModalVisible(true)}>
+        <View style={styles.cardContainer}>
+          <Image
+            source={require('../../assets/images/png/burger.jpg')}
+            style={styles.productImage}
+          />
+          <View style={styles.cardContent}>
+            <Text style={styles.productTitle}>{title}</Text>
+            <Text style={styles.productPrice}>{price}</Text>
+            <Icon name="heart-outline" size={24} color="#000" />
+          </View>
         </View>
-      </View>
-    // </TouchableOpacity>
+      </TouchableOpacity>
+      <ModalComponent
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        text='Add to Cart'
+      />
+    </>
   );
 };
 
