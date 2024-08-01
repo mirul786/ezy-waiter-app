@@ -1,11 +1,9 @@
-// import axios from '../api';
-
 import axios from 'axios';
 
-export const getCustomerByIdApi = async (id: number | string) => {
+export const getUserById = async (id: number | string) => {
   try {
     const response = await axios.get(
-      `${process.env.VITE_API_URL}/customers/getCustomerById?customerId=${id}`,
+      `${process.env.VITE_API_URL}/store/getUserById?userId=${id}`,
     );
     if (response && response.data) {
       return response.data;

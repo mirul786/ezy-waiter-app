@@ -9,16 +9,14 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import Animated, {FadeIn, FadeInDown, FadeInUp} from 'react-native-reanimated';
-// import {useNavigation} from '@react-navigation/native';
 import {LoginProps} from '../model/AuthModel';
 import Toast from 'react-native-toast-message';
 import {Auth} from 'aws-amplify';
-import {getCustomerByIdApi} from '../Api/UserApi/UserApi';
+import {getUserById} from '../Api/UserApi/UserApi';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {DrawerNavigatorParamList} from '../navigation/types';
 
 const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
-  // const navigation = useNavigation();
   const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
   const [field, setField] = useState({
     email: '',
@@ -52,12 +50,24 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
   const signInValidate = () => {
     if (!field.email) {
       setError({...error, email: 'Please enter your email'});
+      Toast.show({
+        type: 'error',
+        text1: 'Please enter your email',
+      });
       return false;
     } else if (!isEmailValidateHandler(field.email)) {
       setError({...error, email: 'Please enter valid email'});
+      Toast.show({
+        type: 'error',
+        text1: 'Please enter valid email',
+      });
       return false;
     } else if (!field.password) {
       setError({...error, password: 'Please enter your password'});
+      Toast.show({
+        type: 'error',
+        text1: 'Please enter your password',
+      });
       return false;
     } else if (!isPasswordValidHandler(field.password)) {
       setError({
@@ -65,27 +75,15 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
         password:
           'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number',
       });
+      Toast.show({
+        type: 'error',
+        text1:
+          'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number',
+      });
       return false;
     }
     return true;
   };
-
-  // const singInHandler = async () => {
-  //   let val = signInValidate();
-  //   if (val && setIsAuthenticated) {
-  //     setIsAuthenticated(true);
-  //   } else if (error.email) {
-  //     Toast.show({
-  //       type: 'error',
-  //       text1: error.email,
-  //     });
-  //   } else if (error.password) {
-  //     Toast.show({
-  //       type: 'error',
-  //       text1: error.password,
-  //     });
-  //   }
-  // };
 
   const signInHandler = async () => {
     let val = signInValidate();
@@ -96,11 +94,11 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
           field?.password,
         );
         console.log('userAtt', res?.attributes);
-        const LoggedInUserId = res?.attributes?.['custom:customerId'];
+        const LoggedInUserId = res?.attributes?.['custom:userId'];
 
         if (LoggedInUserId) {
           try {
-            const response = await getCustomerByIdApi(LoggedInUserId);
+            const response = await getUserById(LoggedInUserId);
             console.log('userResponds', response);
 
             if (response && setIsAuthenticated) {
@@ -123,14 +121,13 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
             console.log('Error in getCustomerByIdApi:', err);
           }
         } else {
-          
           console.log('User ID not found in response attributes');
         }
       } catch (err) {
-         Toast.show({
-           type: 'error',
-           text1: err.message,
-         });
+        Toast.show({
+          type: 'error',
+          text1: err.message,
+        });
         console.log('Error in signIn:', err.message);
       }
     }

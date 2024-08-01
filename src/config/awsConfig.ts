@@ -17,8 +17,8 @@
 export const awsConfig = {
   identityPoolId: '',
   region: 'ap-south-1',
-  userPoolId: 'ap-south-1_lyB0p6SHM',
-  userPoolWebClientId: '1lmlp1dkgo65p6jjrqf30olamj',
+  userPoolId: 'ap-south-1_CWVaca2JU',
+  userPoolWebClientId: '5c7l8lmnd6l4odk19u0d3omup1',
 };
 
 export const OTP_CELL_COUNT = 6;
