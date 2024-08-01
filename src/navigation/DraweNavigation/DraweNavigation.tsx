@@ -8,6 +8,7 @@ import CustomDrawerContent from './CustomDrawerContent';
 import CustomerService from '../../screens/CustomerService';
 import LoginScreen from '../../screens/LoginScreen';
 import {LoginProps} from '../../model/AuthModel';
+import Cart from '../../screens/Cart';
 
 const Drawer = createDrawerNavigator();
 
@@ -27,6 +28,7 @@ const DraweNavigation: React.FC<LoginProps> = ({
       <Drawer.Screen name="Feed" component={Feed} />
       <Drawer.Screen name="Notifications" component={Article} />
       <Drawer.Screen name="CustomerService" component={CustomerService} />
+      <Drawer.Screen name="Cart" component={Cart} />
       <Drawer.Screen name="LoginScreen" component={LoginScreen} />
       {/* <Drawer.Screen name="LoginScreen" options={{headerShown: false}}>
         {props => (

@@ -40,7 +40,14 @@ const CustomDrawerContent: React.FC<CustomDrawerContentProps> = props => {
       />
       <DrawerItem
         icon={({color, size}) => (
-          <AntDesign name="Logout" color={color} size={size} />
+          <AntDesign name="shoppingcart" color={color} size={size} />
+        )}
+        label={'Cart'}
+        onPress={() => navigation.navigate('Cart')}
+      />
+      <DrawerItem
+        icon={({color, size}) => (
+          <AntDesign name="logout" color={color} size={size} />
         )}
         label={'Logout'}
         onPress={() => setIsAuthenticated && setIsAuthenticated(false)}

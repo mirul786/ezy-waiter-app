@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import ViewProductDetails from '../ProductContainer/ViewProductDetails';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -7,12 +7,14 @@ interface ModalComponentProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   text: string;
+  onPress: () => void; // Add onPress prop
 }
 
 const ModalComponent: React.FC<ModalComponentProps> = ({
   modalVisible,
   setModalVisible,
   text,
+  onPress, // Destructure onPress prop
 }) => {
   return (
     <View style={styles.centeredView}>
@@ -26,17 +28,15 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={styles.closeButton}>
-              <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>
-                  <AntDesign name="closecircleo" color={'black'} size={30} />
-                </Text>
-              </Pressable>
-            </View>
+            <Pressable
+              style={styles.closeButton}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <AntDesign name="closecircleo" color={'black'} size={30} />
+            </Pressable>
             <ViewProductDetails />
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              // onPress={() => setModalVisible(!modalVisible)}
+              onPress={onPress} // Use onPress prop
             >
               <Text style={styles.textStyle}>{text}</Text>
             </Pressable>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    position: 'relative', // Make sure the modalView has relative positioning
+    position: 'relative',
   },
   closeButton: {
     position: 'absolute',

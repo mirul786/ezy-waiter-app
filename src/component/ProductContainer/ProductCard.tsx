@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Feed from '../../screens/Feed';
 import {DrawerNavigatorParamList} from '../../navigation/types';
 import ModalComponent from '../Modal/ModalComponent';
+import Toast from 'react-native-toast-message';
 
 type ProductCardProps = {
   title: string;
@@ -21,6 +22,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
   setModalVisible,
 }) => {
   const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
+  const addToCartHandler = () => {
+    // Your logic to add the product to the cart
+    console.log(`added to cart`);
+    Toast.show({
+      type: 'success',
+      text1: "Added to cart",
+    });
+    setModalVisible(false); // Optionally close the modal after adding to cart
+    navigation.navigate('Cart');
+  };
   return (
     <>
       <TouchableOpacity
@@ -40,7 +51,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <ModalComponent
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        text='Add to Cart'
+        text="Add to Cart"
+        onPress={addToCartHandler} // Pass the onPress handler
       />
     </>
   );
