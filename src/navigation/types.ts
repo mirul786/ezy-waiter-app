@@ -13,4 +13,6 @@ export type DrawerNavigatorParamList = {
   Notifications: undefined;
   CustomerService: undefined;
   LoginScreen: undefined;
+  Cart: undefined;
+  HomeScreen: undefined;
 };

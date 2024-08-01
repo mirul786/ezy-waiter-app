@@ -12,9 +12,14 @@ import Animated, {FadeIn, FadeInDown, FadeInUp} from 'react-native-reanimated';
 // import {useNavigation} from '@react-navigation/native';
 import {LoginProps} from '../model/AuthModel';
 import Toast from 'react-native-toast-message';
+import {Auth} from 'aws-amplify';
+import {getCustomerByIdApi} from '../Api/UserApi/UserApi';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {DrawerNavigatorParamList} from '../navigation/types';
 
 const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
   // const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
   const [field, setField] = useState({
     email: '',
     password: '',
@@ -65,22 +70,72 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
     return true;
   };
 
-  const singInHandler = async () => {
+  // const singInHandler = async () => {
+  //   let val = signInValidate();
+  //   if (val && setIsAuthenticated) {
+  //     setIsAuthenticated(true);
+  //   } else if (error.email) {
+  //     Toast.show({
+  //       type: 'error',
+  //       text1: error.email,
+  //     });
+  //   } else if (error.password) {
+  //     Toast.show({
+  //       type: 'error',
+  //       text1: error.password,
+  //     });
+  //   }
+  // };
+
+  const signInHandler = async () => {
     let val = signInValidate();
-    if (val && setIsAuthenticated) {
-      setIsAuthenticated(true);
-    } else if (error.email) {
-      Toast.show({
-        type: 'error',
-        text1: error.email,
-      });
-    } else if (error.password) {
-      Toast.show({
-        type: 'error',
-        text1: error.password,
-      });
+    if (val) {
+      try {
+        const res = await Auth.signIn(
+          field?.email.toLowerCase(),
+          field?.password,
+        );
+        console.log('userAtt', res?.attributes);
+        const LoggedInUserId = res?.attributes?.['custom:customerId'];
+
+        if (LoggedInUserId) {
+          try {
+            const response = await getCustomerByIdApi(LoggedInUserId);
+            console.log('userResponds', response);
+
+            if (response && setIsAuthenticated) {
+              // Handle successful response
+              setIsAuthenticated(true);
+              navigation.navigate('HomeScreen');
+              Toast.show({
+                type: 'success',
+                text1: 'Logged in successfully',
+              });
+            } else {
+              // Handle case when response is not as expected
+              console.log('Unexpected response structure:', response);
+            }
+          } catch (err) {
+            Toast.show({
+              type: 'error',
+              text1: 'Something went wrong',
+            });
+            console.log('Error in getCustomerByIdApi:', err);
+          }
+        } else {
+          
+          console.log('User ID not found in response attributes');
+        }
+      } catch (err) {
+         Toast.show({
+           type: 'error',
+           text1: err.message,
+         });
+        console.log('Error in signIn:', err.message);
+      }
     }
   };
+
   return (
     <View style={styles.container}>
       <Image
@@ -141,7 +196,7 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
             style={styles.fullWidth}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={() => singInHandler()}>
+              onPress={() => signInHandler()}>
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
           </Animated.View>

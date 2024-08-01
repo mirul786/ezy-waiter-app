@@ -9,6 +9,8 @@ import DraweNavigation from './src/navigation/DraweNavigation/DraweNavigation';
 import Feed from './src/screens/Feed';
 import LoginScreen from './src/screens/LoginScreen';
 import Toast from 'react-native-toast-message';
+import { Amplify } from 'aws-amplify';
+import { awsConfig } from './src/config/awsConfig';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,6 +34,8 @@ function App(): React.JSX.Element {
       </View>
     );
   }
+
+  Amplify.configure(awsConfig);
 
   return (
     <NavigationContainer>
