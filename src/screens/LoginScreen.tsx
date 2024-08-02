@@ -123,7 +123,7 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
         } else {
           console.log('User ID not found in response attributes');
         }
-      } catch (err) {
+      } catch (err: any) {
         Toast.show({
           type: 'error',
           text1: err.message,
@@ -197,7 +197,7 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
           </Animated.View>
-          <Animated.View
+          {/* <Animated.View
             entering={FadeInDown.delay(800).duration(1000).springify()}
             style={styles.signupContainer}>
             <Text style={styles.signup}>Don't have an account? </Text>
@@ -207,7 +207,7 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
             >
               SignUp
             </Text>
-          </Animated.View>
+          </Animated.View> */}
         </View>
       </View>
     </View>
