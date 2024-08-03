@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -9,12 +9,16 @@ import DraweNavigation from './src/navigation/DraweNavigation/DraweNavigation';
 import Feed from './src/screens/Feed';
 import LoginScreen from './src/screens/LoginScreen';
 import Toast from 'react-native-toast-message';
-import { Amplify } from 'aws-amplify';
-import { awsConfig } from './src/config/awsConfig';
+import {Amplify} from 'aws-amplify';
+import {awsConfig} from './src/config/awsConfig';
+import {UserContextProvider} from './src/ContextApi/UserContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+const queryClient = new QueryClient();
 
 function App(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,16 +60,20 @@ function App(): React.JSX.Element {
           />
         )}
       </Stack.Navigator>
-        <Toast />
+      <Toast />
     </NavigationContainer>
   );
 }
 
 function MainApp(): React.JSX.Element {
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <DraweNavigation />
-    </GestureHandlerRootView>
+    <QueryClientProvider client={queryClient}>
+      <UserContextProvider>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <DraweNavigation />
+        </GestureHandlerRootView>
+      </UserContextProvider>
+    </QueryClientProvider>
   );
 }
 

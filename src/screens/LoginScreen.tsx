@@ -93,13 +93,13 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
           field?.email.toLowerCase(),
           field?.password,
         );
-        console.log('userAtt', res?.attributes);
+        // console.log('userAtt', res?.attributes);
         const LoggedInUserId = res?.attributes?.['custom:userId'];
 
         if (LoggedInUserId) {
           try {
             const response = await getUserById(LoggedInUserId);
-            console.log('userResponds', response);
+            // console.log('userResponds', response);
 
             if (response && setIsAuthenticated) {
               // Handle successful response
@@ -197,17 +197,6 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
           </Animated.View>
-          {/* <Animated.View
-            entering={FadeInDown.delay(800).duration(1000).springify()}
-            style={styles.signupContainer}>
-            <Text style={styles.signup}>Don't have an account? </Text>
-            <Text
-              style={styles.signupText}
-              //   onPress={() => navigation.push('Signup')}
-            >
-              SignUp
-            </Text>
-          </Animated.View> */}
         </View>
       </View>
     </View>
