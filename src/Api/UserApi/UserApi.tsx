@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../api';
 
 export const getUserById = async (id: number | string) => {
   try {

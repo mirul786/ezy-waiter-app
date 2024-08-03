@@ -7,11 +7,11 @@ import {DrawerNavigatorParamList} from '../../navigation/types';
 
 type TableCardProps = {
   title: string;
-  price: string;
+  seatingCapacity: number;
   //   imageUrl: string;
 };
 
-const TableCard: React.FC<TableCardProps> = ({title, price}) => {
+const TableCard: React.FC<TableCardProps> = ({title, seatingCapacity}) => {
   const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Feed')}>
@@ -22,7 +22,10 @@ const TableCard: React.FC<TableCardProps> = ({title, price}) => {
         />
         <View style={styles.cardContent}>
           <Text style={styles.productTitle}>{title}</Text>
-          <Text style={styles.productPrice}>{price}</Text>
+          <Text style={styles.productPrice}>
+            {'Seating Capacity: '}
+            {seatingCapacity}
+          </Text>
           {/* <Icon name="heart-outline" size={24} color="#000" /> */}
         </View>
       </View>
@@ -48,6 +51,7 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     padding: 10,
+    alignItems: 'center',
   },
   productTitle: {
     color: 'black',

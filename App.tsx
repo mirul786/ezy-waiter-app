@@ -11,8 +11,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import Toast from 'react-native-toast-message';
 import {Amplify} from 'aws-amplify';
 import {awsConfig} from './src/config/awsConfig';
-import {UserContextProvider} from './src/ContextApi/UserContext';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {UserContextProvider, UserContext} from './src/ContextApi/UserContext';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,14 +22,24 @@ const queryClient = new QueryClient();
 
 function App(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const {user} = useContext(UserContext); // Get user from context
 
   useEffect(() => {
     // Simulate an async task like checking authentication status
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    const initialize = async () => {
+      try {
+        // Perform any initialization or fetch logic if needed
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Initialization error:', error);
+        setIsLoading(false);
+      }
+    };
+
+    initialize();
   }, []);
+
+  Amplify.configure(awsConfig);
 
   if (isLoading) {
     return (
@@ -39,17 +49,13 @@ function App(): React.JSX.Element {
     );
   }
 
-  Amplify.configure(awsConfig);
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!isAuthenticated ? (
+        {!user ? (
           <Stack.Screen
             name="LoginScreen"
-            component={(props: any) => (
-              <LoginScreen {...props} setIsAuthenticated={setIsAuthenticated} />
-            )}
+            component={LoginScreen}
             options={{headerShown: false}}
           />
         ) : (
@@ -67,33 +73,17 @@ function App(): React.JSX.Element {
 
 function MainApp(): React.JSX.Element {
   return (
-    <QueryClientProvider client={queryClient}>
-      <UserContextProvider>
+    <UserContextProvider>
+      <QueryClientProvider client={queryClient}>
         <GestureHandlerRootView style={{flex: 1}}>
           <DraweNavigation />
         </GestureHandlerRootView>
-      </UserContextProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </UserContextProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -101,4 +91,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default () => (
+  <UserContextProvider>
+    <App />
+  </UserContextProvider>
+);

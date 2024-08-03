@@ -15,6 +15,7 @@ import {Auth} from 'aws-amplify';
 import {getUserById} from '../Api/UserApi/UserApi';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {DrawerNavigatorParamList} from '../navigation/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
   const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
@@ -99,12 +100,12 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
         if (LoggedInUserId) {
           try {
             const response = await getUserById(LoggedInUserId);
-            // console.log('userResponds', response);
+            // AsyncStorage.setItem('user', response?.data?.email);
+            console.log('userResponds', response);
 
-            if (response && setIsAuthenticated) {
+            if (response) {
               // Handle successful response
-              setIsAuthenticated(true);
-              navigation.navigate('HomeScreen');
+              // navigation.navigate('HomeScreen');
               Toast.show({
                 type: 'success',
                 text1: 'Logged in successfully',

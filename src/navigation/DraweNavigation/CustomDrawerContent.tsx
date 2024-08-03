@@ -7,13 +7,23 @@ import {
 } from '@react-navigation/drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {LoginProps} from '../../model/AuthModel';
+import { Auth } from 'aws-amplify';
 
 interface CustomDrawerContentProps
   extends DrawerContentComponentProps,
     LoginProps {}
 
 const CustomDrawerContent: React.FC<CustomDrawerContentProps> = props => {
-  const {navigation, setIsAuthenticated} = props;
+  const {navigation} = props;
+
+  const handleLogout = async () => {
+    try {
+      // Sign out from AWS Amplify
+      await Auth.signOut();
+    } catch (error) {
+      console.error('Error during sign out:', error);
+    }
+  };
 
   return (
     <DrawerContentScrollView {...props}>
@@ -50,7 +60,7 @@ const CustomDrawerContent: React.FC<CustomDrawerContentProps> = props => {
           <AntDesign name="logout" color={color} size={size} />
         )}
         label={'Logout'}
-        onPress={() => setIsAuthenticated && setIsAuthenticated(false)}
+        onPress={() => handleLogout()}
       />
     </DrawerContentScrollView>
   );
