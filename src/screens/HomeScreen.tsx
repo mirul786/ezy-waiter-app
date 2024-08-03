@@ -1,21 +1,29 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import SearchBar from '../component/SearchBar/SearchBar'
-import Header from '../component/Header/Header'
-import ProductContainer from '../component/ProductContainer/ProductContainer'
-import TableContainer from '../component/TableContainer/TableContainer'
+import {Alert, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import SearchBar from '../component/SearchBar/SearchBar';
+import Header from '../component/Header/Header';
+import ProductContainer from '../component/ProductContainer/ProductContainer';
+import TableContainer from '../component/TableContainer/TableContainer';
+import ListStyling from '../component/ListStyling/ListStyling';
 
 const HomeScreen = () => {
+  const [numColumns, setNumColumns] = useState<number>(2); // Default number of columns
   return (
     <View style={styles.container}>
       <Header />
-      <SearchBar placeholder="Search your table" onSearchButtonPress={() => Alert.alert("Button is pressed")}/>
-      <TableContainer />
+      <View style={styles.lists}>
+        <SearchBar
+          placeholder="Search your table"
+          onSearchButtonPress={() => Alert.alert('Button is pressed')}
+        />
+        <ListStyling numColumns={numColumns} setNumColumns={setNumColumns} />
+      </View>
+      <TableContainer numColumns={numColumns} setNumColumns={setNumColumns} />
     </View>
   );
-}
+};
 
-export default HomeScreen
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -25,5 +33,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+  },
+  lists: {
+    flexDirection: 'row',
+    // justifyContent: "space-between",
+    alignItems: 'center',
   },
 });

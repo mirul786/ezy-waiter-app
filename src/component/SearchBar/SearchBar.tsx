@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: {width: 0, height: 1},
     elevation: 3,
+    width: "75%",
+    height: 50
   },
   searchInput: {
     flex: 1,

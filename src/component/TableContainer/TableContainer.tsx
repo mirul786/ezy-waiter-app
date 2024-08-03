@@ -1,22 +1,27 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import TableCard from './TableCard';
 import { useQuery } from '@tanstack/react-query';
 import { getTableList } from '../../Api/StoreApi/StoreApi';
 
-const TableContainer = () => {
+type TableContainerProps = {
+  numColumns: number;
+  setNumColumns: (numColumns: number) => void;
+};
+
+const TableContainer: React.FC<TableContainerProps> = ({numColumns}) => {
   const storeId = 77;
 
   const {isLoading, error, data} = useQuery({
     queryKey: ['tables', storeId],
     queryFn: () => getTableList(storeId),
   });
-  console.log("TableData", data?.data)
+  console.log('TableData', data?.data);
   return (
     // <ScrollView contentContainerStyle={styles.productsContainer}>
-    //   {tables.map((product, index) => (
+    //   {data?.data.map((product, index) => (
     //     <TableCard
     //       key={index}
     //       title={product.title}
@@ -25,7 +30,7 @@ const TableContainer = () => {
     //     />
     //   ))}
     // </ScrollView>
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.productsContainer}>
       <FlatList
         data={data?.data}
         renderItem={({item}) => (
@@ -34,7 +39,9 @@ const TableContainer = () => {
             seatingCapacity={item.seatingCapacityCount}
           />
         )}
-        keyExtractor={item => item.tableId}
+        keyExtractor={item => item.tableId.toString()}
+        numColumns={numColumns}
+        key={`${numColumns}-${data?.data.length}`} // Change key when numColumns changes
       />
     </SafeAreaView>
   );
@@ -43,9 +50,6 @@ const TableContainer = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
   },
   productsContainer: {
     flexDirection: 'row',
