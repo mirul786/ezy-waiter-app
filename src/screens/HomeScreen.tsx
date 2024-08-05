@@ -5,6 +5,7 @@ import Header from '../component/Header/Header';
 import ProductContainer from '../component/ProductContainer/ProductContainer';
 import TableContainer from '../component/TableContainer/TableContainer';
 import ListStyling from '../component/ListStyling/ListStyling';
+import Floor from '../component/FloorContainer/Floor';
 
 const HomeScreen = () => {
   const [numColumns, setNumColumns] = useState<number>(2); // Default number of columns
@@ -18,6 +19,7 @@ const HomeScreen = () => {
         />
         <ListStyling numColumns={numColumns} setNumColumns={setNumColumns} />
       </View>
+      <Floor/>
       <TableContainer numColumns={numColumns} setNumColumns={setNumColumns} />
     </View>
   );

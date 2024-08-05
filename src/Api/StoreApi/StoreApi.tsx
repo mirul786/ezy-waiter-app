@@ -33,3 +33,20 @@ export const getProductList = async (storeId: number) => {
     throw error;
   }
 };
+
+export const getTableListByFloorId = async (floorId: number,  storeId: number) => {
+  try {
+    const response = await axios.get(
+      `${process.env.VITE_API_URL}/table/getFloorMappedTableList?floorId=${floorId}&storeId=${storeId}`,
+    );
+    if (response) {
+      return response;
+    } else {
+      console.error('Unexpected response structure:', response);
+      throw new Error('Unexpected response structure');
+    }
+  } catch (error) {
+    console.error('Floor Table API  call error:', error);
+    throw error;
+  }
+};
