@@ -1,11 +1,9 @@
 import {
   View,
-  Text,
   Image,
   TextInput,
-  TouchableOpacity,
   StyleSheet,
-  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import Animated, {FadeIn, FadeInDown, FadeInUp} from 'react-native-reanimated';
@@ -16,9 +14,11 @@ import {getUserById} from '../Api/UserApi/UserApi';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {DrawerNavigatorParamList} from '../navigation/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PrimaryButton from '../component/Button/PrimaryButton';
 
 const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
   const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
+  const [loading, setLoading] = useState<boolean>(false);
   const [field, setField] = useState({
     email: '',
     password: '',
@@ -89,6 +89,7 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
   const signInHandler = async () => {
     let val = signInValidate();
     if (val) {
+      setLoading(true);
       try {
         const res = await Auth.signIn(
           field?.email.toLowerCase(),
@@ -113,6 +114,7 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
             } else {
               // Handle case when response is not as expected
               console.log('Unexpected response structure:', response);
+              setLoading(false);
             }
           } catch (err) {
             Toast.show({
@@ -120,9 +122,11 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
               text1: 'Something went wrong',
             });
             console.log('Error in getCustomerByIdApi:', err);
+            setLoading(false);
           }
         } else {
           console.log('User ID not found in response attributes');
+          setLoading(false);
         }
       } catch (err: any) {
         Toast.show({
@@ -130,8 +134,10 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
           text1: err.message,
         });
         console.log('Error in signIn:', err.message);
+        setLoading(false);
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -192,11 +198,15 @@ const LoginScreen: React.FC<LoginProps> = ({setIsAuthenticated}) => {
           <Animated.View
             entering={FadeInDown.delay(600).duration(1000).springify()}
             style={styles.fullWidth}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.loginButton}
               onPress={() => signInHandler()}>
               <Text style={styles.loginButtonText}>Login</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <PrimaryButton
+              onPress={() => signInHandler()}
+              children={loading ? <ActivityIndicator size="small" /> : 'Login'}
+            />
           </Animated.View>
         </View>
       </View>

@@ -32,10 +32,10 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
+    backgroundColor: '#00BFFF',
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 24,
   },
   disabled: {
     backgroundColor: '#A9A9A9',
@@ -45,8 +45,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#FFF',
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
