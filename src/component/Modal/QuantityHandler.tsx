@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderColor: 'lightgrey',
     borderWidth: 1,
-    paddingVertical: 3,
-    paddingHorizontal: 10,
+    paddingVertical: 0,
+    paddingHorizontal: 8,
     backgroundColor: 'white',
   },
   buttonLeft: {
@@ -104,10 +104,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderColor: 'lightgrey',
     borderWidth: 1,
-    paddingVertical: 5,
+    paddingVertical: 2,
     backgroundColor: 'white',
     color: "black",
-    width: 40,
+    width: 30,
   },
 });
 

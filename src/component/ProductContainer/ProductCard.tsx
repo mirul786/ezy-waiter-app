@@ -11,6 +11,8 @@ import Toast from 'react-native-toast-message';
 type ProductCardProps = {
   title: string;
   price: string;
+  url: string;
+  productId: number;
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
 };
@@ -18,6 +20,8 @@ type ProductCardProps = {
 const ProductCard: React.FC<ProductCardProps> = ({
   title,
   price,
+  url,
+  productId,
   modalVisible,
   setModalVisible,
 }) => {
@@ -27,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     console.log(`added to cart`);
     Toast.show({
       type: 'success',
-      text1: "Added to cart",
+      text1: 'Added to cart',
     });
     setModalVisible(false); // Optionally close the modal after adding to cart
     navigation.navigate('Cart');
@@ -35,22 +39,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <>
       <TouchableOpacity
-        onPress={() => setModalVisible && setModalVisible(true)}>
+        onPress={() => setModalVisible && setModalVisible(true)}
+        activeOpacity={0.6}
+        delayLongPress={500}>
         <View style={styles.cardContainer}>
           <Image
-            source={require('../../assets/images/png/burger.jpg')}
+            // source={require('../../assets/images/png/burger.jpg')}
+            source={{uri: url}}
             style={styles.productImage}
           />
           <View style={styles.cardContent}>
             <Text style={styles.productTitle}>{title}</Text>
-            <Text style={styles.productPrice}>{price}</Text>
-            <Icon name="heart-outline" size={24} color="#000" />
+            <Text style={styles.productPrice}>
+              {'₹'}
+              {price}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
       <ModalComponent
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        url={url}
+        productId={productId}
         text="Add to Cart"
         onPress={addToCartHandler} // Pass the onPress handler
       />

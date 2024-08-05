@@ -8,6 +8,8 @@ interface ModalComponentProps {
   setModalVisible: (visible: boolean) => void;
   text: string;
   onPress: () => void; // Add onPress prop
+  url: string;
+  productId: number
 }
 
 const ModalComponent: React.FC<ModalComponentProps> = ({
@@ -15,6 +17,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
   setModalVisible,
   text,
   onPress, // Destructure onPress prop
+  url,
+  productId,
 }) => {
   return (
     <View style={styles.centeredView}>
@@ -33,7 +37,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
               onPress={() => setModalVisible(!modalVisible)}>
               <AntDesign name="closecircleo" color={'black'} size={30} />
             </Pressable>
-            <ViewProductDetails />
+            <ViewProductDetails url={url} productId={productId} />
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={onPress} // Use onPress prop

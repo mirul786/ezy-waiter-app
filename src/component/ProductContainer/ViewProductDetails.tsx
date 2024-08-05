@@ -9,38 +9,45 @@ import {
 } from 'react-native';
 import QuantityHandler from '../Modal/QuantityHandler';
 
-const ViewProductDetails = () => {
+type ViewProductDetailsProps = {
+  url: string;
+  productId: number;
+};
+
+const ViewProductDetails: React.FC<ViewProductDetailsProps> = ({
+  url,
+  productId,
+}) => {
   const [quantity, setQuantity] = useState('1');
 
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={require('../../assets/images/png/burger.jpg')}
-          style={styles.productImage}
-        />
-      </View>
-      <View style={styles.cardContent}>
-        <Text style={styles.productTitle}>Classic Hamburger</Text>
-        <Text style={styles.productDescription}>
-          A half pound of flame broiled angus beef served with french fries
-        </Text>
-        {/* <Text style={styles.productPrice}>$10.00</Text>
+    productId && (
+      <View style={styles.cardContainer}>
+        <View style={styles.imageContainer}>
+          <Image source={{uri: url}} style={styles.productImage} />
+        </View>
+        <View style={styles.cardContent}>
+          <Text style={styles.productTitle}>Classic Hamburger</Text>
+          <Text style={styles.productDescription}>
+            A half pound of flame broiled angus beef served with french fries
+          </Text>
+          {/* <Text style={styles.productPrice}>$10.00</Text>
         <Text style={styles.quantityLabel}>Quantity</Text> */}
+        </View>
+        <View style={styles.handleItem}>
+          <Text style={styles.quantityLabel}>Price</Text>
+          <Text style={styles.productPrice}>$10.00</Text>
+        </View>
+        <View style={styles.handleItem}>
+          <Text style={styles.quantityLabel}>Quantity</Text>
+          <QuantityHandler />
+        </View>
+        <View style={styles.handleItem}>
+          <Text style={styles.quantityLabel}>Size</Text>
+          <Text style={styles.itemSize}>Regular</Text>
+        </View>
       </View>
-      <View style={styles.handleItem}>
-        <Text style={styles.quantityLabel}>Price</Text>
-        <Text style={styles.productPrice}>$10.00</Text>
-      </View>
-      <View style={styles.handleItem}>
-        <Text style={styles.quantityLabel}>Quantity</Text>
-        <QuantityHandler />
-      </View>
-      <View style={styles.handleItem}>
-        <Text style={styles.quantityLabel}>Size</Text>
-        <Text style={styles.itemSize}>Regular</Text>
-      </View>
-    </View>
+    )
   );
 };
 
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   productPrice: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#00f',
     fontWeight: 'bold',
     paddingRight: 20,
@@ -83,12 +90,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   quantityLabel: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#666',
     paddingTop: 10,
   },
   itemSize: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#666',
     paddingTop: 10,
     paddingRight: 15,

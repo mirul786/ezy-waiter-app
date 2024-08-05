@@ -14,7 +14,10 @@ type TableCardProps = {
 const TableCard: React.FC<TableCardProps> = ({title, seatingCapacity}) => {
   const navigation = useNavigation<NavigationProp<DrawerNavigatorParamList>>();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Feed')}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Feed')}
+      activeOpacity={0.6}
+      delayLongPress={500}>
       <View style={styles.cardContainer}>
         <Image
           source={require('../../assets/images/dinein.png')}
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: 10,
     alignItems: 'center',
+    backgroundColor: 'green',
   },
   productTitle: {
     color: 'black',
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
   },
   productPrice: {
     fontSize: 14,
-    color: '#888',
+    color: '#fff',
   },
 });
 

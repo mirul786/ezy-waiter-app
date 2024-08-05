@@ -29,12 +29,14 @@ const ProductContainer: React.FC<ProductContainerProps> = ({numColumns}) => {
         renderItem={({item}) => (
           <ProductCard
             title={item.productName}
-            price={item.price}
+            price={item.sellingPrice}
+            url={item.imageUrl}
+            productId={item?.productId}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
           />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.productId}
         numColumns={numColumns}
         key={`${numColumns}-${products.length}`} // Change key when numColumns changes
       />
