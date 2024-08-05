@@ -9,9 +9,10 @@ import {getTableList} from '../../Api/StoreApi/StoreApi';
 type TableContainerProps = {
   numColumns: number;
   setNumColumns: (numColumns: number) => void;
+  selectedFloor: any;
 };
 
-const TableContainer: React.FC<TableContainerProps> = ({numColumns}) => {
+const TableContainer: React.FC<TableContainerProps> = ({numColumns, selectedFloor}) => {
   const storeId = 77;
 
   const {isLoading, error, data} = useQuery({
@@ -22,7 +23,7 @@ const TableContainer: React.FC<TableContainerProps> = ({numColumns}) => {
   return (
     <SafeAreaView style={styles.productsContainer}>
       <FlatList
-        data={data?.data}
+        data={selectedFloor === undefined ? data?.data : selectedFloor}
         renderItem={({item}) => (
           <TableCard
             title={item.tableName}

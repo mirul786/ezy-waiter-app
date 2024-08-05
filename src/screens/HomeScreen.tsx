@@ -9,6 +9,9 @@ import Floor from '../component/FloorContainer/Floor';
 
 const HomeScreen = () => {
   const [numColumns, setNumColumns] = useState<number>(2); // Default number of columns
+  const [selectedFloor, setSelectedFloor] = useState<any>(); // Default floor
+
+  // console.log("selctedFloor", selectedFloor)
   return (
     <View style={styles.container}>
       <Header />
@@ -19,8 +22,14 @@ const HomeScreen = () => {
         />
         <ListStyling numColumns={numColumns} setNumColumns={setNumColumns} />
       </View>
-      <Floor/>
-      <TableContainer numColumns={numColumns} setNumColumns={setNumColumns} />
+      <Floor
+        setSelectedFloor={setSelectedFloor}
+      />
+      <TableContainer
+        numColumns={numColumns}
+        setNumColumns={setNumColumns}
+        selectedFloor={selectedFloor}
+      />
     </View>
   );
 };

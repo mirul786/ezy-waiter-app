@@ -1,33 +1,49 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import {useQuery} from '@tanstack/react-query';
 import {getTableListByFloorId} from '../../Api/StoreApi/StoreApi';
 
-const Floor = () => {
-  const [selectedFloor, setSelectedFloor] = useState();
+type FloorProps = {
+  setSelectedFloor: any;
+};
+
+const Floor: React.FC<FloorProps> = ({setSelectedFloor}) => {
+  const [floorIndex, setFloorIndex] = useState<number>(1);
+  const [floorId, setFloorId] = useState<number>(1722504267959);
   const storeId = 77;
-  const floorId = 1722504267959;
+  
+
+  useEffect(() => {
+    // const floorId = floorIndex === 0 ? 1722504267959 : 1722505031073;
+    if (floorIndex === 0) {
+      setFloorId(1722504267959);
+    } else {
+      setFloorId(1722505031073);
+    }
+  }, [floorIndex, floorId]);
 
   const {isLoading, error, data} = useQuery({
-    queryKey: ['tableListByFloor', storeId],
+    queryKey: ['tableListByFloor',floorId, storeId],
     queryFn: () => getTableListByFloorId(floorId, storeId),
   });
-  const handleDropDownSelect = (itemValue: any) => {
-    console.log("itemValue",itemValue)
+  const handleDropDownSelect = (itemValue: any, itemIndex: number) => {
+    console.log('itemValue', itemIndex);
+    setSelectedFloor(itemValue);
+    setFloorIndex(itemIndex);
   };
-//   console.log('TableDataByFloor', data?.data);
+  //   console.log('TableDataByFloor', data?.data);
   return (
     <View style={styles.container}>
       <Picker
         dropdownIconColor="#939185"
         mode="dropdown"
-        selectedValue={selectedFloor}
+        selectedValue={floorIndex}
         onValueChange={(itemValue, itemIndex) =>
-          handleDropDownSelect(itemValue)
+          handleDropDownSelect(itemValue, itemIndex)
         }>
         <Picker.Item label="Floor_1" value={data?.data} style={styles.text} />
-        <Picker.Item label="Floor_2" value="js" style={styles.text} />
+        <Picker.Item label="Floor_2" value={data?.data} style={styles.text} />
       </Picker>
     </View>
   );
