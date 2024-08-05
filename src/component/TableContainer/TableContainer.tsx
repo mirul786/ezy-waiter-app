@@ -1,10 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, { useContext, useState } from 'react';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
+import React from 'react';
+import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import TableCard from './TableCard';
-import { useQuery } from '@tanstack/react-query';
-import { getTableList } from '../../Api/StoreApi/StoreApi';
+import {useQuery} from '@tanstack/react-query';
+import {getTableList} from '../../Api/StoreApi/StoreApi';
 
 type TableContainerProps = {
   numColumns: number;
@@ -18,18 +18,8 @@ const TableContainer: React.FC<TableContainerProps> = ({numColumns}) => {
     queryKey: ['tables', storeId],
     queryFn: () => getTableList(storeId),
   });
-  console.log('TableData', data?.data);
+  // console.log('TableData', data?.data);
   return (
-    // <ScrollView contentContainerStyle={styles.productsContainer}>
-    //   {data?.data.map((product, index) => (
-    //     <TableCard
-    //       key={index}
-    //       title={product.title}
-    //       price={product.price}
-    //       // imageUrl={product.imageUrl}
-    //     />
-    //   ))}
-    // </ScrollView>
     <SafeAreaView style={styles.productsContainer}>
       <FlatList
         data={data?.data}
